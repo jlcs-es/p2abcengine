@@ -60,6 +60,7 @@ import eu.abc4trust.guice.ProductionModuleFactory.CryptoEngine;
 import eu.abc4trust.util.TimingsLogger;
 import eu.abc4trust.xml.Credential;
 import eu.abc4trust.xml.PseudonymWithMetadata;
+import eu.abc4trust.smartcard.IoTsmartcardio.IoTCardTerminal;
 
 /**
  * A few things that are assumed to be true:
@@ -188,36 +189,88 @@ public class HardwareSmartcard implements Smartcard {
         	System.out.println("Running with an Android phone, so we limit the max blob size to 255 bytes");
         	max_blob_bytes = 253; //Android does not support extended apdu's
         }
-    }    
-    
-    private ResponseAPDU transmitCommand(CommandAPDU cmd) throws CardException{
-    	int count = 0;
-    	while(count < 4){
-    		try{
-				card.beginExclusive();
-				break;
-			}catch(CardException e){
-				System.err.println("Could not obtain exclusive lock on the card!");
-				count++;
-				if(count == 4){
-					throw e;
-				}
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				
-				card.disconnect(false);
-				card = terminal.connect("*");
-				this.channel = card.getBasicChannel();
-			}
-    	}
-    	
-		ResponseAPDU response = channel.transmit(cmd);
-		card.endExclusive();    		
-		return response;
     }
+
+
+    /**
+     *
+     * @param terminal
+     * @param file A file describing the credential URI to ID mapping. If null, it is assumed that no mapping is done yet.
+     */
+    public HardwareSmartcard(CardTerminal terminal, Random rand) {
+        this.terminal = terminal;
+        this.rand = rand;
+
+        if (isAndroid() || terminal instanceof IoTCardTerminal) {
+            System.out.println("Running with an Android phone or IoT SmartCard, so we limit the max blob size to 255 bytes");
+            max_blob_bytes = 253; //Android and IoT Smartcards do not support extended apdu's
+        }
+    }
+
+
+
+
+
+
+    private ResponseAPDU transmitCommand(CommandAPDU cmd) throws CardException{
+        int count = 0;
+        while(count < 4){
+            try{
+                this.card = terminal.connect("*");
+                this.channel = this.card.getBasicChannel();
+                this.card.beginExclusive();
+                break;
+            }catch(CardException e){
+                System.err.println("Could not obtain exclusive lock on the card!");
+                count++;
+                if(count == 4){
+                    throw e;
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+                card.disconnect(false);
+            }
+        }
+
+        ResponseAPDU response = channel.transmit(cmd);
+        card.endExclusive();
+        return response;
+    }
+
+
+
+
+//    private ResponseAPDU transmitCommand(CommandAPDU cmd) throws CardException{
+//    	int count = 0;
+//    	while(count < 4){
+//    		try{
+//				card.beginExclusive();
+//				break;
+//			}catch(CardException e){
+//				System.err.println("Could not obtain exclusive lock on the card!");
+//				count++;
+//				if(count == 4){
+//					throw e;
+//				}
+//				try {
+//					Thread.sleep(500);
+//				} catch (InterruptedException e1) {
+//					e1.printStackTrace();
+//				}
+//
+//				card.disconnect(false);
+//				card = terminal.connect("*");
+//				this.channel = card.getBasicChannel();
+//			}
+//    	}
+//
+//		ResponseAPDU response = channel.transmit(cmd);
+//		card.endExclusive();
+//		return response;
+//    }
     
     @SuppressWarnings("unused")
     private void resetCard(){

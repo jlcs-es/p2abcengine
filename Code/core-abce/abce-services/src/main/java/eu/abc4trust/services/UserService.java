@@ -43,6 +43,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -56,6 +57,7 @@ import org.xml.sax.SAXException;
 import eu.abc4trust.abce.internal.user.credentialManager.CredentialManagerException;
 import eu.abc4trust.abce.internal.user.policyCredentialMatcher.PolicyCredentialMatcherImpl;
 import eu.abc4trust.abce.utils.SecretWrapper;
+import eu.abc4trust.abce.utils.IoTsmartcardCreatorHelper;
 import eu.abc4trust.cryptoEngine.CryptoEngineException;
 import eu.abc4trust.exceptions.CannotSatisfyPolicyException;
 import eu.abc4trust.guice.ProductionModuleFactory.CryptoEngine;
@@ -699,6 +701,70 @@ public class UserService {
         // .createIssuanceMessage(issuanceMessage));
         return of.createIssuanceMessage(issuanceMessage);
     }
+
+
+
+
+    //////////////// IoT Development /////////////
+
+    // TODO: updateIoTsmartcard IP and Port
+    // TODO: registerIoTsmartcard
+
+
+    @POST()
+    @Path("/initIoTsmartcard/{issuerParametersUid}")
+    @Consumes({ MediaType.APPLICATION_XML, MediaType.TEXT_XML })
+    @Produces(MediaType.TEXT_XML)
+    public void initIoTsmartcard(
+            @PathParam("issuerParametersUid") URI issuerParametersUid,
+            @QueryParam("host") String host,
+            @QueryParam("port") int port
+        ) {
+        this.log.info("UserService - initIoTsmartcard ");
+
+        this.initializeHelper();
+
+        UserHelper instance = UserHelper.getInstance();
+
+        try {
+            Random random = new SecureRandom();
+
+            KeyManager keyManager = UserStorageManager
+                    .getKeyManager(this.fileStoragePrefix);
+            SystemParameters systemParameters = keyManager
+                    .getSystemParameters();
+
+            systemParameters.getCryptoParams().getContent().get(1);
+
+
+            IoTsmartcardCreatorHelper iotsccHelper = new IoTsmartcardCreatorHelper(random, systemParameters, host, port);
+            IssuerParameters issuerParameters = keyManager
+                    .getIssuerParameters(issuerParametersUid);
+            iotsccHelper.addIssuerParameters(issuerParameters, systemParameters);
+            BasicSmartcard hardwareSmartcard = iotsccHelper
+                    .getHardwareSmartcard();
+
+            instance.cardStorage.addSmartcard(hardwareSmartcard, 1234);
+
+            File file = new File(this.fileStoragePrefix + File.separatorChar
+                    + "smartcard");
+            //	TODO verify this is required
+            //    SmartcardInitializeTool.storeObjectInFile(softwareSmartcard, file);
+
+        } catch (Exception ex) {
+            throw new WebApplicationException(ex,
+                    Response.Status.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
 }
