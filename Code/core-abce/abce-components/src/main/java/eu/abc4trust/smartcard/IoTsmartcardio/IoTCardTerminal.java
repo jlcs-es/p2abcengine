@@ -26,7 +26,7 @@ public class IoTCardTerminal extends CardTerminal {
     }
 
     @Override
-    public Card connect(String s) throws CardException {
+    public IoTCard connect(String s) throws CardException {
         if(card != null && card.isAlive()) {
             return card;
         } else {

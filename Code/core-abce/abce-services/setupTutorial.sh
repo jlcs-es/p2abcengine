@@ -28,3 +28,6 @@ cp target/selfcontained-inspection-service.war tmp/inspector
 cp target/selfcontained-revocation-service.war tmp/revocation
 cp target/selfcontained-identity-service.war tmp/identity
 cp tutorial.sh tmp/
+
+cp startServices.sh tmp/
+cp setupBeforeCreateSmartcard.sh tmp/

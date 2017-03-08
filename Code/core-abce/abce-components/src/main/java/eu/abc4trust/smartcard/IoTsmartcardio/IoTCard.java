@@ -39,14 +39,14 @@ public class IoTCard extends Card {
     }
 
     @Override
-    public CardChannel getBasicChannel() {
+    public IoTCardChannel getBasicChannel() {
         IoTCardChannel ch = new IoTCardChannel();
         ch.setCard(this);
         return ch;
     }
 
     @Override
-    public CardChannel openLogicalChannel() throws CardException {
+    public IoTCardChannel openLogicalChannel() throws CardException {
         return null;
     }
 

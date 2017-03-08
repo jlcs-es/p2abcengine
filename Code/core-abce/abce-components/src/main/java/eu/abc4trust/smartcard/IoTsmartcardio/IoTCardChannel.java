@@ -40,8 +40,6 @@ public class IoTCardChannel extends CardChannel {
             return responseAPDU;
         } catch (IOException e) {
             throw new CardException(e);
-        } finally {
-            return null;
         }
     }
 
