@@ -171,7 +171,7 @@ public class HardwareSmartcard implements Smartcard {
 
     private final Random rand; 
 	private static final StaticUriToIDMap staticMap = StaticUriToIDMap.getInstance();
-	public static boolean printInput = false;
+	public static boolean printInput = true;
 
     /**
      * 
@@ -1775,7 +1775,7 @@ public class HardwareSmartcard implements Smartcard {
         		System.out.println("Input for storeBlob: " + Arrays.toString(buf.array()));
             ResponseAPDU response = this.transmitCommand(new CommandAPDU(buf));
             System.out.println("Response from storeBlob: " + response);
-            if((response.getSW1() != STATUS_OK) && (response.getSW1() != STATUS_BAD_PIN)){
+            if((response.getSW1() != STATUS_OK) && (response.getSW2() != STATUS_BAD_PIN)){
             	throw new InsufficientStorageException("Could not store blob. Response from card: " + response);
             }
             return this.evaluateStatus(response);
