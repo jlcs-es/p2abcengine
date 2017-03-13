@@ -39,6 +39,7 @@ public class StaticUriToIDMap {
 	private Map<URI, Byte> patrasIssuers;
 	private Map<URI, Byte> soderhamnIssuersIdemix;
 	private Map<URI, Byte> soderhamnIssuersUProve;
+	private Map<URI, Byte> testIoTIdemix;
 	private static StaticUriToIDMap instance;
 	public static final byte credUnivIdemixIssuer = 1,
 			credCourseUProveIssuer = 2,
@@ -56,6 +57,7 @@ public class StaticUriToIDMap {
         credClassUProveIssuer = 4,
         credSubjectUProveIssuer = 5,
         credRoleUProveIssuer = 6;
+    public static final byte testIoTIdemixIssuer = 1;
 	    
     public static final URI courseIssuerUID = URI.create("urn:patras:issuer:credCourse:uprove");
     
@@ -80,10 +82,14 @@ public class StaticUriToIDMap {
         URI credSubjectIssuerUProve = URI.create("urn:soderhamn:issuer:credSubject:uprove");
         URI credRoleIssuerUProve = URI.create("urn:soderhamn:issuer:credRole:uprove");
 
+        URI credtestIoTIssuerIdemix = URI.create("http://ticketcompany/MyFavoriteSoccerTeam/issuance:idemix");
+
 		//
 		patrasIssuers = new HashMap<URI, Byte>();
 		soderhamnIssuersIdemix = new HashMap<URI, Byte>();
 		soderhamnIssuersUProve = new HashMap<URI, Byte>();
+		testIoTIdemix = new HashMap<URI, Byte>();
+
 		// patras		
 		patrasIssuers.put(credUnivIssuerIdemix, credUnivIdemixIssuer);
 		patrasIssuers.put(credCourseIssuerUprove, credCourseUProveIssuer);
@@ -103,6 +109,8 @@ public class StaticUriToIDMap {
 		soderhamnIssuersUProve.put(credClassIssuerUProve, credClassUProveIssuer);
 		soderhamnIssuersUProve.put(credSubjectIssuerUProve, credSubjectUProveIssuer);
 		soderhamnIssuersUProve.put(credRoleIssuerUProve, credRoleUProveIssuer);
+
+		testIoTIdemix.put(credtestIoTIssuerIdemix, testIoTIdemixIssuer);
 	}
 	
 	public static StaticUriToIDMap getInstance(){
@@ -122,6 +130,8 @@ public class StaticUriToIDMap {
 				id = soderhamnIssuersUProve.get(issuerUri);
 			}
 		}
+		if( id == null )
+			id = testIoTIdemix.get(issuerUri);
 		if(id == null){
 			throw new RuntimeException("[StaticMap] The given IssuerURI: " +issuerUri.toString()+ " does not map to an ID");
 		}
@@ -141,6 +151,11 @@ public class StaticUriToIDMap {
 		}
 		for(URI uri : issuers.keySet()){
 			if(issuers.get(uri) == ID){
+				return uri;
+			}
+		}
+		for(URI uri : testIoTIdemix.keySet()){
+			if(testIoTIdemix.get(uri) == ID){
 				return uri;
 			}
 		}

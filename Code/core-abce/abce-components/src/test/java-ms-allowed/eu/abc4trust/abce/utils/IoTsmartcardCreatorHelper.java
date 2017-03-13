@@ -139,7 +139,7 @@ public class IoTsmartcardCreatorHelper {
             throw new RuntimeException(e);
         }
 
-        this.hardwareSmartcard.getNewNonceForSignature();
+        this.hardwareSmartcard.getNewNonceForSignature();       // TODO
         URI parametersUri = issuerParameters.getParametersUID();
 
         SmartcardStatusCode universityResult = this.hardwareSmartcard
@@ -150,6 +150,10 @@ public class IoTsmartcardCreatorHelper {
                     "Could not add IssuerParams to smartcard... "
                             + universityResult);
         }
+
+        // set working mode
+        hardwareSmartcard.setWorkingMode();
+
     }
 
     public int getPin() {
