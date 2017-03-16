@@ -4,5 +4,5 @@ rm -r tmp/
 ./setupTutorial.sh
 cd tmp/
 konsole --tabs-from-file ./startServices.tabs
-sleep 8
+sleep 10
 ./setupBeforeCreateSmartcard.sh
