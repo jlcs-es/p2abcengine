@@ -38,8 +38,8 @@ public class IoTsmartcardConnection {
         byte res[] = new byte[offset+len];
 
         res[0] = 0x01;
-        res[1] = (byte) len;
-        res[2] = (byte) (len >> 8);
+        res[1] = (byte) (len >> 8);
+        res[2] = (byte) len;
         System.arraycopy(apduBytes, 0, res, offset, len);
 
         return res;
@@ -60,7 +60,7 @@ public class IoTsmartcardConnection {
         byte lenbytes[] = new byte[2];
         int r = inputStream.read(lenbytes, 0, 2);
         ByteBuffer bb = ByteBuffer.wrap(lenbytes);
-        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.order(ByteOrder.BIG_ENDIAN);
         short len = bb.getShort();
 
         // Read APDU
