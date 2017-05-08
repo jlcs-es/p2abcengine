@@ -1,0 +1,4 @@
+title: Issuer ;; workdir: ./issuer ;; command: java -jar selfcontained-issuance-service.war 9100 ;; profile: Shell
+title: Verifier ;; workdir: ./verifier ;; command: java -jar selfcontained-verification-service.war 9300 ;; profile: Shell
+title: Inspector ;; workdir: ./inspector ;; command: java -jar selfcontained-inspection-service.war 9400 ;; profile: Shell
+title: Revocation ;; workdir: ./revocation ;; command: java -jar selfcontained-revocation-service.war 9500 ;; profile: Shell
