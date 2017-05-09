@@ -118,6 +118,8 @@ public class UserService {
             JAXBElement<PresentationPolicyAlternatives> rawPresentationPolicyAlternatives) {
         this.log.info("UserService - canBeSatisfied ");
 
+        long startTime = System.nanoTime();
+
         this.initializeHelper();
 
         UserHelper instance = UserHelper.getInstance();
@@ -127,6 +129,10 @@ public class UserService {
             boolean b = instance.getEngine().canBeSatisfied(USERNAME, p);
             ABCEBoolean createABCEBoolean = this.of.createABCEBoolean();
             createABCEBoolean.setValue(b);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /canBeSatisfied/ : " + estimatedTime + " ns ");
+
             return this.of.createABCEBoolean(createABCEBoolean);
         } catch (CredentialManagerException ex) {
             throw new WebApplicationException(ex,
@@ -168,6 +174,9 @@ public class UserService {
     public JAXBElement<UiPresentationArguments> createPresentationToken(
             JAXBElement<PresentationPolicyAlternatives> rawPresentationPolicyAlternatives) {
         this.log.info("UserService - createPresentationToken ");
+
+        long startTime = System.nanoTime();
+
         PresentationPolicyAlternatives presentationPolicyAlternatives = rawPresentationPolicyAlternatives.getValue();
         this.initializeHelper();
 
@@ -175,6 +184,10 @@ public class UserService {
 
         try {
             UiPresentationArguments uiPresentationArguments = instance.getEngine().createPresentationToken(USERNAME, presentationPolicyAlternatives);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /createPresentationToken/ : " + estimatedTime + " ns ");
+
             return ObjectFactoryReturnTypes.wrap(uiPresentationArguments);
         } catch (CannotSatisfyPolicyException ex) {
             throw new WebApplicationException(ex,
@@ -199,6 +212,8 @@ public class UserService {
     public JAXBElement<PresentationToken> createPresentationTokenFromUi(
             JAXBElement<UiPresentationReturn> rawUpr) {
         this.log.info("UserService - createPresentationTokenUi ");
+
+        long startTime = System.nanoTime();
 
         UiPresentationReturn uiPresentationReturn = rawUpr.getValue();
         this.initializeHelper();
@@ -225,6 +240,10 @@ public class UserService {
         try {
             PresentationToken presentationToken = instance.getEngine()
                     .createPresentationToken(USERNAME, uiPresentationReturn);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /createPresentationTokenUi/ : " + estimatedTime + " ns ");
+
             return this.of.createPresentationToken(presentationToken);
         } catch (CredentialManagerException ex) {
             throw new WebApplicationException(ex,
@@ -280,6 +299,8 @@ public class UserService {
             JAXBElement<IssuanceMessage> jm) {
         this.log.info("UserService - issuanceProtocolStep - IssuanceMessage");
 
+        long startTime = System.nanoTime();
+
         this.initializeHelper();
 
         UserHelper instance = UserHelper.getInstance();
@@ -289,6 +310,10 @@ public class UserService {
         try {
             IssuanceReturn issuanceReturn = instance.getEngine()
                     .issuanceProtocolStep(USERNAME, m);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /issuanceProtocolStep/ : " + estimatedTime + " ns ");
+
             return ObjectFactoryReturnTypes.wrap(issuanceReturn);
         } catch (CannotSatisfyPolicyException ex) {
             throw new WebApplicationException(ex,
@@ -316,6 +341,8 @@ public class UserService {
         this.log.info("UserService - issuanceProtocolStep - UiIssuanceReturn");
         ;
 
+        long startTime = System.nanoTime();
+
         this.initializeHelper();
 
         UserHelper instance = UserHelper.getInstance();
@@ -323,6 +350,10 @@ public class UserService {
         try {
             IssuanceMessage issuanceMessage = instance.getEngine()
                     .issuanceProtocolStep(USERNAME, uir);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /issuanceProtocolStepUi/ : " + estimatedTime + " ns ");
+
             return new ObjectFactory().createIssuanceMessage(issuanceMessage);
         } catch (CryptoEngineException ex) {
             throw new WebApplicationException(ex,
@@ -347,12 +378,18 @@ public class UserService {
     public void updateNonRevocationEvidence() {
         this.log.info("UserService - updateNonRevocationEvidence ");
 
+        long startTime = System.nanoTime();
+
         this.initializeHelper();
 
         UserHelper instance = UserHelper.getInstance();
 
         try {
             instance.credentialManager.updateNonRevocationEvidence(USERNAME);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /updateNonRevocationEvidence/ : " + estimatedTime + " ns ");
+
         } catch (CredentialManagerException ex) {
             throw new WebApplicationException(ex,
                     Response.Status.INTERNAL_SERVER_ERROR);
@@ -372,6 +409,8 @@ public class UserService {
     public JAXBElement<URISet> listCredentials() {
         this.log.info("UserService - listCredentials ");
 
+        long startTime = System.nanoTime();
+
         this.initializeHelper();
 
         UserHelper instance = UserHelper.getInstance();
@@ -382,6 +421,10 @@ public class UserService {
 
             URISet uriList = this.of.createURISet();
             uriList.getURI().addAll(credentialUids);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /listCredentials/ : " + estimatedTime + " ns ");
+
             return this.of.createURISet(uriList);
         } catch (CredentialManagerException ex) {
             throw new WebApplicationException(ex,
@@ -407,6 +450,8 @@ public class UserService {
             @PathParam("credentialUid") URI credUid) {
         this.log.info("UserService - getCredentialDescription ");
 
+        long startTime = System.nanoTime();
+
         this.initializeHelper();
 
         UserHelper instance = UserHelper.getInstance();
@@ -414,6 +459,9 @@ public class UserService {
         try {
             CredentialDescription credDesc = instance.credentialManager
                     .getCredentialDescription(USERNAME, credUid);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /getCredentialDescription/ : " + estimatedTime + " ns ");
 
             return this.of.createCredentialDescription(credDesc);
 
@@ -430,6 +478,8 @@ public class UserService {
     public void createSmartcard(
             @PathParam("issuerParametersUid") URI issuerParametersUid) {
         this.log.info("UserService - getCredentialDescription ");
+
+        long startTime = System.nanoTime();
 
         this.initializeHelper();
 
@@ -460,6 +510,9 @@ public class UserService {
       //	TODO verify this is required
       //    SmartcardInitializeTool.storeObjectInFile(softwareSmartcard, file);
 
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /createSmartcard/ : " + estimatedTime + " ns ");
+
         } catch (Exception ex) {
             throw new WebApplicationException(ex,
                     Response.Status.INTERNAL_SERVER_ERROR);
@@ -482,6 +535,8 @@ public class UserService {
             @PathParam("credentialUid") URI credentialUid) {
         this.log.info("UserService - deleteCredential \"" + credentialUid + "\"");
 
+        long startTime = System.nanoTime();
+
         this.initializeHelper();
 
         UserHelper instance = UserHelper.getInstance();
@@ -492,6 +547,9 @@ public class UserService {
             ABCEBoolean createABCEBoolean = this.of
                     .createABCEBoolean();
             createABCEBoolean.setValue(r);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /deleteCredential/ : " + estimatedTime + " ns ");
 
             return this.of.createABCEBoolean(createABCEBoolean);
         } catch (CredentialManagerException ex) {
@@ -510,6 +568,8 @@ public class UserService {
             CredentialSpecification credSpec) {
         this.log.info("UserService - storeCredentialSpecification ");
 
+        long startTime = System.nanoTime();
+
         try {
             KeyManager keyManager = UserStorageManager
                     .getKeyManager(this.fileStoragePrefix);
@@ -520,6 +580,9 @@ public class UserService {
             ABCEBoolean createABCEBoolean = this.of
                     .createABCEBoolean();
             createABCEBoolean.setValue(r);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /storeCredentialSpecification/ : " + estimatedTime + " ns ");
 
             return this.of.createABCEBoolean(createABCEBoolean);
         } catch (Exception ex) {
@@ -536,6 +599,8 @@ public class UserService {
             SystemParameters systemParameters) {
         this.log.info("UserService - storeSystemParameters ");
 
+        long startTime = System.nanoTime();
+
         try {
             KeyManager keyManager = UserStorageManager
                     .getKeyManager(this.fileStoragePrefix);
@@ -549,6 +614,9 @@ public class UserService {
             if (r) {
                 this.initializeHelper();
             }
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /storeSystemParameters/ : " + estimatedTime + " ns ");
 
             return this.of.createABCEBoolean(createABCEBoolean);
         } catch (Exception ex) {
@@ -566,6 +634,8 @@ public class UserService {
             IssuerParameters issuerParameters) {
         this.log.info("UserService - storeIssuerParameters ");
 
+        long startTime = System.nanoTime();
+
         this.log.info("UserService - storeIssuerParameters - issuerParametersUid: "
                 + issuerParametersUid
                 + ", "
@@ -582,6 +652,9 @@ public class UserService {
             createABCEBoolean.setValue(r);
 
             this.log.info("UserService - storeIssuerParameters - done ");
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /storeIssuerParameters/ : " + estimatedTime + " ns ");
 
             return this.of.createABCEBoolean(createABCEBoolean);
         } catch (Exception ex) {
@@ -601,6 +674,8 @@ public class UserService {
         this.log.info("UserService - storeRevocationAuthorityParameters: \""
                 + revocationAuthorityParameters + "\"");
 
+        long startTime = System.nanoTime();
+
         try {
             KeyManager keyManager = UserStorageManager
                     .getKeyManager(this.fileStoragePrefix);
@@ -611,6 +686,9 @@ public class UserService {
 
             ABCEBoolean createABCEBoolean = this.of.createABCEBoolean();
             createABCEBoolean.setValue(r);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /storeRevocationAuthorityParameters/ : " + estimatedTime + " ns ");
 
             return this.of.createABCEBoolean(createABCEBoolean);
         } catch (Exception ex) {
@@ -632,6 +710,9 @@ public class UserService {
                 + inspectorPublicKeyUid
                 + ", "
                 + inspectorPublicKey.getPublicKeyUID());
+
+        long startTime = System.nanoTime();
+
         try {
             KeyManager keyManager = UserStorageManager
                     .getKeyManager(this.fileStoragePrefix);
@@ -643,6 +724,9 @@ public class UserService {
             createABCEBoolean.setValue(r);
 
             this.log.info("UserService - storeInspectorPublicKey - done ");
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /storeInspectorPublicKey/ : " + estimatedTime + " ns ");
 
             return this.of.createABCEBoolean(createABCEBoolean);
         } catch (Exception ex) {
@@ -691,11 +775,17 @@ public class UserService {
             JAXBElement<IssuanceMessageAndBoolean> rawIssuanceMessageAndBoolean)
                     throws JAXBException, SAXException, ParserConfigurationException,
                     IOException {
+
+        long startTime = System.nanoTime();
+
     	IssuanceMessageAndBoolean issuanceMessageAndBoolean = rawIssuanceMessageAndBoolean.getValue();
         IssuanceMessage issuanceMessage = issuanceMessageAndBoolean
                 .getIssuanceMessage();
 
         ObjectFactory of = new ObjectFactory();
+
+        long estimatedTime = System.nanoTime() - startTime;
+        this.log.info("Time for /extractIssuanceMessage/ : " + estimatedTime + " ns ");
 
         // String issuanceMessageAsXML = XmlUtils.toNormalizedXML(of
         // .createIssuanceMessage(issuanceMessage));
@@ -721,6 +811,8 @@ public class UserService {
             @QueryParam("port") int port
         ) {
         this.log.info("UserService - initIoTsmartcard ");
+
+        long startTime = System.nanoTime();
 
         this.initializeHelper();
 
@@ -750,6 +842,9 @@ public class UserService {
                     + "smartcard");
             //	TODO verify this is required
             //    SmartcardInitializeTool.storeObjectInFile(softwareSmartcard, file);
+
+            long estimatedTime = System.nanoTime() - startTime;
+            this.log.info("Time for /initIoTsmartcard/ : " + estimatedTime + " ns ");
 
         } catch (Exception ex) {
             throw new WebApplicationException(ex,

@@ -50,7 +50,7 @@ public class IdentitySelectionService {
 	@Produces({MediaType.TEXT_XML})
 	public JAXBElement<UiPresentationReturn> selectPresentationTokenDescription(JAXBElement<UiPresentationArguments> presentationArguments) {
 		UiPresentationArguments arg = presentationArguments.getValue();
-		
+
 		// Choose always the first choice among all the alternatives
 		int chosenPolicy = 0;
 		int chosenPresentationToken = 0;
@@ -87,7 +87,7 @@ public class IdentitySelectionService {
 
 		UiIssuanceReturn ret = new UiIssuanceReturn(arg.uiContext, chosenPresentationToken, metadataToChange, chosenPseudonymList,
 				chosenInspectors);
-		
+
 		return ObjectFactoryReturnTypes.wrap(ret);
 	}
 }
