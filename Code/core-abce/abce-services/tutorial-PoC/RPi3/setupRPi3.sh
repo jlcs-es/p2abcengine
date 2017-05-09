@@ -16,5 +16,5 @@ cp target/selfcontained-user-service.war tmp/user
 cp target/selfcontained-identity-service.war tmp/identity
 
 
-echo "cd tmp/user/ && java -jar selfcontained-user-service.war 9200"
-echo "cd tmp/identity && -jar selfcontained-identity-service.war 9200"
+echo "cd tmp/user/ ; java -jar selfcontained-user-service.war 9200"
+echo "cd tmp/identity ; java -jar selfcontained-identity-service.war 9600"

@@ -3,8 +3,8 @@
 #Stop script if an error occurs.
 set -e
 
-Rpi3IP = 192.168.33.1
-myIP = 192.168.33.96
+Rpi3IP="192.168.33.1"
+myIP="192.168.33.96"
 
 
 #################

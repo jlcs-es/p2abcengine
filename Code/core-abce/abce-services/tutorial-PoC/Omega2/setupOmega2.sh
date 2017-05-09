@@ -6,7 +6,6 @@ set -e
 rm -rf tmp
 
 mkdir -p tmp
-mkdir -p tmp/user
 
 cp -R tutorial-resources tmp/
 

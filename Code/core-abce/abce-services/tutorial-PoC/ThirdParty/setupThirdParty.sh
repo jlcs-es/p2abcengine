@@ -27,7 +27,7 @@ cp target/selfcontained-verification-service.war tmp/verifier
 cp target/selfcontained-inspection-service.war tmp/inspector
 cp target/selfcontained-revocation-service.war tmp/revocation
 #cp target/selfcontained-identity-service.war tmp/identity
-cp tutorial.sh tmp/
+#cp tutorial.sh tmp/
 
 cp startServices.tabs tmp/
 cp scriptThirdParty.sh tmp/
