@@ -1,0 +1,11 @@
+
+#FROM openjdk:7-jre
+#COPY target/selfcontained-issuance-service.war .
+#EXPOSE 9100
+#ENTRYPOINT java -jar selfcontained-issuance-service.war 9100
+
+FROM jetty
+
+COPY target/issuance-service.war /var/lib/jetty/webapps/root.war
+
+EXPOSE 8080

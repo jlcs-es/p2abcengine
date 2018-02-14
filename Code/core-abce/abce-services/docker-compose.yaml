@@ -1,0 +1,59 @@
+version: "3"
+services:
+
+  issuer:
+    build:
+      context: .
+      dockerfile: Dockerfile-Issuer
+    ports:
+      - "9100:8080"
+    networks:
+      - frontend
+      
+  user:
+    build:
+      context: .
+      dockerfile: Dockerfile-User
+    ports:
+      - "9200:8080"
+    networks:
+      - frontend
+
+  verifier:
+    build:
+      context: .
+      dockerfile: Dockerfile-Verifier
+    ports:
+      - "9300:8080"
+    networks:
+      - frontend
+
+  inspector:
+    build:
+      context: .
+      dockerfile: Dockerfile-Inspector
+    ports:
+      - "9400:8080"
+    networks:
+      - frontend
+
+  revocation:
+    build:
+      context: .
+      dockerfile: Dockerfile-Revocation
+    ports:
+      - "9500:8080"
+    networks:
+      - frontend
+
+  identity:
+    build:
+      context: .
+      dockerfile: Dockerfile-Identity
+    ports:
+      - "9600:8080"
+    networks:
+      - frontend
+
+networks:
+  frontend:
