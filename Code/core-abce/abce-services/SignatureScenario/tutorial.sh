@@ -96,17 +96,17 @@ curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/issuerPara
 # Store Issuer Parameters at user.
 # This method is not specified in H2.2.
 echo "Store Issuer Parameters at user"
-curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9200/user/storeIssuerParameters/http%3A%2F%2FSmartCityIssuance-Idemix"  > storeIssuerParametersAtUser.xml
+curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9200/user/storeIssuerParameters/http%3A%2F%2FSmartCity%2Fissuance%3Aidemix"  > storeIssuerParametersAtUser.xml
 
 # Store Issuer Parameters at verifier.
 # This method is not specified in H2.2.
 echo "Store Issuer Parameters at verifier"
-curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9300/verification/storeIssuerParameters/http%3A%2F%2FSmartCityIssuance-Idemix"  > storeIssuerParametersAtVerifier.xml
+curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9300/verification/storeIssuerParameters/http%3A%2F%2FSmartCity%2Fissuance%3Aidemix"  > storeIssuerParametersAtVerifier.xml
 
 # Create smartcard at user.
 # This method is not specified in H2.2.
 echo "Create smartcard at user"
-curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9200/user/createSmartcard/http%3A%2F%2FSmartCityIssuance-Idemix"
+curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9200/user/createSmartcard/http%3A%2F%2FSmartCity%2Fissuance%3Aidemix"
 
 # Init issuance protocol (first step for the issuer).
 echo "Init issuance protocol"
@@ -136,8 +136,6 @@ curl -X POST --header "Content-Type: text/xml" -d @thirdIssuanceMessageAndBoolea
 # Third issuance protocol step (second step for the user).
 echo "Third issuance protocol step (second step for the user)"
 curl -X POST --header "Content-Type: text/xml" -d @thirdIssuanceMessage.xml "http://$MyIP:9200/user/issuanceProtocolStep/" > fourthIssuanceMessageAndBoolean.xml
-
-exit 0
 
 # Create presentation policy alternatives.
 # This method is not specified in H2.2.

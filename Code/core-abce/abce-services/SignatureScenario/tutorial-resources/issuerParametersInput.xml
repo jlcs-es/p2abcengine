@@ -4,7 +4,7 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
    xsi:schemaLocation="http://abc4trust.eu/wp2/abcschemav1.0 ../../../../../../../../abc4trust-xml/src/main/resources/xsd/schema.xsd"
    Version="1.0">
-  <abc:ParametersUID>http://SmartCityIssuance-Idemix</abc:ParametersUID>
+  <abc:ParametersUID>http://SmartCity/issuance:idemix</abc:ParametersUID>
   <abc:FriendlyIssuerDescription lang="en">Issuer parameters for MySmartCity</abc:FriendlyIssuerDescription>
   <abc:AlgorithmID>urn:abc4trust:1.0:algorithm:idemix</abc:AlgorithmID>
   <abc:CredentialSpecUID>http://MySmartCity-Owner-Device</abc:CredentialSpecUID>
