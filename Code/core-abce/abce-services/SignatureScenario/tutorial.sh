@@ -3,7 +3,7 @@
 #Stop script if an error occurs.
 set -e
 
-MyIP="155.54.205.9"
+MyIP="192.168.1.45"
 
 # Setup System Parameters.
 echo "Setup System Parameters"
@@ -11,17 +11,17 @@ curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9100/issuer/setupSy
 
 # Store credential specification at issuer.
 echo "Store credential specification at issuer"
-curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9100/issuer/storeCredentialSpecification/MySmartCity-Owner-Device" > storeCredentialSpecificationAtIssuerResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9100/issuer/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtIssuerResponce.xml
 
 # Store credential specification at user.
 # This method is not specified in H2.2.
 echo "Store credential specification at user"
-curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9200/user/storeCredentialSpecification/MySmartCity-Owner-Device" > storeCredentialSpecificationAtUserResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9200/user/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtUserResponce.xml
 
 # Store credential specification at verifier.
 # This method is not specified in H2.2.
 echo "Store credential specification at verifier"
-curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9300/verification/storeCredentialSpecification/MySmartCity-Owner-Device" > storeCredentialSpecificationAtVerifierResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9300/verification/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtVerifierResponce.xml
 
 # Store System parameters at Revocation Authority.
 # This method is not specified in H2.2.
@@ -40,22 +40,22 @@ curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://
 
 # Setup Revocation Authority Parameters.
 echo "Setup Revocation Authority Parameters"
-curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/revocationReferences.xml "http://$MyIP:9500/revocation/setupRevocationAuthorityParameters?keyLength=1024&uid=SmartCityRevocation" > revocationAuthorityParameters.xml
+curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/revocationReferences.xml "http://$MyIP:9500/revocation/setupRevocationAuthorityParameters?keyLength=1024&uid=http%3A%2F%2FSmartCityRevocation" > revocationAuthorityParameters.xml
 
 # Store Revocation Authority Parameters at issuer.
 # This method is not specified in H2.2.
 echo "Store Revocation Authority Parameters at issuer"
-curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$MyIP:9100/issuer/storeRevocationAuthorityParameters/SmartCityRevocation"  > storeRevocationAuthorityParameters.xml
+curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$MyIP:9100/issuer/storeRevocationAuthorityParameters/http%3A%2F%2FSmartCityRevocation"  > storeRevocationAuthorityParameters.xml
 
 # Store Revocation Authority Parameters at user.
 # This method is not specified in H2.2.
 echo "Store Revocation Authority Parameters at user"
-curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$MyIP:9200/user/storeRevocationAuthorityParameters/SmartCityRevocation"  > storeRevocationAuthorityParametersAtUserResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$MyIP:9200/user/storeRevocationAuthorityParameters/http%3A%2F%2FSmartCityRevocation"  > storeRevocationAuthorityParametersAtUserResponce.xml
 
 # Store Revocation Authority Parameters at verifier.
 # This method is not specified in H2.2.
 echo "Store Revocation Authority Parameters at verifier"
-curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$MyIP:9300/verification/storeRevocationAuthorityParameters/SmartCityRevocation"  > storeRevocationAuthorityParametersAtVerifierResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$MyIP:9300/verification/storeRevocationAuthorityParameters/http%3A%2F%2FSmartCityRevocation"  > storeRevocationAuthorityParametersAtVerifierResponce.xml
 
 ##
 
@@ -67,23 +67,23 @@ curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://
 # Store credential specification at Inspector.
 # This method is not specified in H2.2.
 echo "Store credential specification at inspector"
-curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9400/inspector/storeCredentialSpecification/MySmartCity-Owner-Device" > storeCredentialSpecificationAtInspectorResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9400/inspector/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtInspectorResponce.xml
 
 
 # Generate Inspector Public Key
 # This method is not specified in H2.2.
 echo "Generating Inspector Public Key"
-curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9400/inspector/setupInspectorPublicKey?keyLength=1024&cryptoMechanism=idemix&uid=SmartCityInspection" > inspectorPublicKey.xml
+curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9400/inspector/setupInspectorPublicKey?keyLength=1024&cryptoMechanism=idemix&uid=http%3A%2F%2FSmartCityInspection" > inspectorPublicKey.xml
 
 # Store Inspector Public Key at user.
 # This method is not specified in H2.2.
 echo "Store Inspector Public Key at user"
-curl -X PUT --header "Content-Type: text/xml" -d @inspectorPublicKey.xml "http://$MyIP:9200/user/storeInspectorPublicKey/SmartCityInspection"  > storeInspectorPublicKeyAtUserResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @inspectorPublicKey.xml "http://$MyIP:9200/user/storeInspectorPublicKey/http%3A%2F%2FSmartCityInspection"  > storeInspectorPublicKeyAtUserResponce.xml
 
 # Store Inspector Public Key at verifier.
 # This method is not specified in H2.2.
 echo "Store Inspector Public Key at verifier"
-curl -X PUT --header "Content-Type: text/xml" -d @inspectorPublicKey.xml "http://$MyIP:9300/verification/storeInspectorPublicKey/SmartCityInspection"  > storeInspectorPublicKeyAtVerifierResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @inspectorPublicKey.xml "http://$MyIP:9300/verification/storeInspectorPublicKey/http%3A%2F%2FSmartCityInspection"  > storeInspectorPublicKeyAtVerifierResponce.xml
 
 
 ##
@@ -96,17 +96,17 @@ curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/issuerPara
 # Store Issuer Parameters at user.
 # This method is not specified in H2.2.
 echo "Store Issuer Parameters at user"
-curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9200/user/storeIssuerParameters/SmartCityIssuance-Idemix"  > storeIssuerParametersAtUser.xml
+curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9200/user/storeIssuerParameters/http%3A%2F%2FSmartCityIssuance-Idemix"  > storeIssuerParametersAtUser.xml
 
 # Store Issuer Parameters at verifier.
 # This method is not specified in H2.2.
 echo "Store Issuer Parameters at verifier"
-curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9300/verification/storeIssuerParameters/SmartCityIssuance-Idemix"  > storeIssuerParametersAtVerifier.xml
+curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9300/verification/storeIssuerParameters/http%3A%2F%2FSmartCityIssuance-Idemix"  > storeIssuerParametersAtVerifier.xml
 
 # Create smartcard at user.
 # This method is not specified in H2.2.
 echo "Create smartcard at user"
-curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9200/user/createSmartcard/SmartCityIssuance-Idemix"
+curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9200/user/createSmartcard/http%3A%2F%2FSmartCityIssuance-Idemix"
 
 # Init issuance protocol (first step for the issuer).
 echo "Init issuance protocol"
@@ -136,6 +136,8 @@ curl -X POST --header "Content-Type: text/xml" -d @thirdIssuanceMessageAndBoolea
 # Third issuance protocol step (second step for the user).
 echo "Third issuance protocol step (second step for the user)"
 curl -X POST --header "Content-Type: text/xml" -d @thirdIssuanceMessage.xml "http://$MyIP:9200/user/issuanceProtocolStep/" > fourthIssuanceMessageAndBoolean.xml
+
+exit 0
 
 # Create presentation policy alternatives.
 # This method is not specified in H2.2.
@@ -203,7 +205,7 @@ echo "${revocationhandle}" >> revocationAttributeList.xml
 echo '</abc:AttributeValue></abc:Attributes></abc:AttributeList>' >> revocationAttributeList.xml 
 
 echo "Calling revocation authority"
-curl -X POST --header "Content-Type: text/xml" -d @revocationAttributeList.xml "http://$MyIP:9500/revocation/revoke/SmartCityRevocation" > revokeReply.xml
+curl -X POST --header "Content-Type: text/xml" -d @revocationAttributeList.xml "http://$MyIP:9500/revocation/revoke/http%3A%2F%2FSmartCityRevocation" > revokeReply.xml
 
 
 #

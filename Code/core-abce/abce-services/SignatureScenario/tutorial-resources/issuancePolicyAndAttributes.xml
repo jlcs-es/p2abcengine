@@ -19,8 +19,8 @@
       </abc:PresentationPolicy>
 
       <abc:CredentialTemplate SameKeyBindingAs="#nym">
-        <abc:CredentialSpecUID>MySmartCity-Owner-Device</abc:CredentialSpecUID>
-        <abc:IssuerParametersUID>SmartCityIssuance-Idemix</abc:IssuerParametersUID>
+        <abc:CredentialSpecUID>http://MySmartCity-Owner-Device</abc:CredentialSpecUID>
+        <abc:IssuerParametersUID>http://SmartCityIssuance-Idemix</abc:IssuerParametersUID>
         <abc:UnknownAttributes/>
       </abc:CredentialTemplate>
     </abc:IssuancePolicy>
