@@ -27,7 +27,7 @@
     </abc:Credential>
     <abc:AttributePredicate Function="urn:oasis:names:tc:xacml:1.0:function:string-equal">
       <abc:Attribute CredentialAlias="#device" AttributeType="OwnerCity" />
-      <abc:ConstantValue>Murcia</abc:ConstantValue>
+      <abc:ConstantValue>Tretogor</abc:ConstantValue>
     </abc:AttributePredicate>
   </abc:PresentationPolicy>
 </abc:PresentationPolicyAlternatives>

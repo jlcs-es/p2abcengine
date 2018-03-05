@@ -30,34 +30,39 @@
       <abc:AttributeDescription DataType="xs:string" Encoding="urn:abc4trust:1.0:encoding:string:sha-256" Type="OwnerFirstName">
         <abc:FriendlyAttributeName lang="en">first name</abc:FriendlyAttributeName>
       </abc:AttributeDescription>
-      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Sigismund</abc:AttributeValue>
+      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                          xsi:type="xs:string">Sigismund</abc:AttributeValue>
     </abc:Attribute>
     <abc:Attribute>
       <abc:AttributeUID>-2715953330829768453</abc:AttributeUID>
       <abc:AttributeDescription DataType="xs:string" Encoding="urn:abc4trust:1.0:encoding:string:sha-256" Type="OwnerLastName">
         <abc:FriendlyAttributeName lang="en">last name</abc:FriendlyAttributeName>
       </abc:AttributeDescription>
-      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Dijkstra</abc:AttributeValue>
+      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                          xsi:type="xs:string">Dijkstra</abc:AttributeValue>
     </abc:Attribute>
     <abc:Attribute>
       <abc:AttributeUID>-1231744817504418999</abc:AttributeUID>
       <abc:AttributeDescription Type="OwnerDNI" DataType="xs:integer" Encoding="urn:abc4trust:1.0:encoding:integer:unsigned">
         <abc:FriendlyAttributeName lang="en">DNI</abc:FriendlyAttributeName>
       </abc:AttributeDescription>
-      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:integer">12345678</abc:AttributeValue>
+      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                          xsi:type="xs:integer">12345678</abc:AttributeValue>
     </abc:Attribute>
     <abc:Attribute>
       <abc:AttributeUID>-2231744817504418816</abc:AttributeUID>
       <abc:AttributeDescription DataType="xs:string" Encoding="urn:abc4trust:1.0:encoding:string:sha-256" Type="OwnerCity">
         <abc:FriendlyAttributeName lang="en">city</abc:FriendlyAttributeName>
       </abc:AttributeDescription>
-      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Murcia</abc:AttributeValue>
+      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                          xsi:type="xs:string">Tretogor</abc:AttributeValue>
     </abc:Attribute>
     <abc:Attribute>
       <abc:AttributeUID>-1231744817504418817</abc:AttributeUID>
       <abc:AttributeDescription Type="OwnerPostalCode" DataType="xs:integer" Encoding="urn:abc4trust:1.0:encoding:integer:unsigned">
         <abc:FriendlyAttributeName lang="en">Postal Code</abc:FriendlyAttributeName>
       </abc:AttributeDescription>
-      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:integer">30001</abc:AttributeValue>
+      <abc:AttributeValue xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                          xsi:type="xs:integer">99999</abc:AttributeValue>
     </abc:Attribute>
 </abc:IssuancePolicyAndAttributes>

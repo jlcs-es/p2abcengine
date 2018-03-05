@@ -3,157 +3,162 @@
 #Stop script if an error occurs.
 set -e
 
-MyIP="192.168.1.45"
+IssuerIP="155.54.205.105:9100"
+UserIP="155.54.205.105:9200"
+VerifierIP="155.54.205.105:9300"
+InspectorIP="155.54.205.105:9400"
+RevocationIP="155.54.205.105:9500"
+IdentityIP="155.54.205.105:9600"
 
 # Setup System Parameters.
 echo "Setup System Parameters"
-curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9100/issuer/setupSystemParameters/?keyLength=1024" > systemparameters.xml
+curl -X POST --header "Content-Type: text/xml" "http://$IssuerIP/issuer/setupSystemParameters/?keyLength=1024" > systemparameters.xml
 
 # Store credential specification at issuer.
 echo "Store credential specification at issuer"
-curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9100/issuer/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtIssuerResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$IssuerIP/issuer/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtIssuerResponce.xml
 
 # Store credential specification at user.
 # This method is not specified in H2.2.
 echo "Store credential specification at user"
-curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9200/user/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtUserResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$UserIP/user/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtUserResponce.xml
 
 # Store credential specification at verifier.
 # This method is not specified in H2.2.
 echo "Store credential specification at verifier"
-curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9300/verification/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtVerifierResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$VerifierIP/verification/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtVerifierResponce.xml
 
 # Store System parameters at Revocation Authority.
 # This method is not specified in H2.2.
 echo "Store System parameters at Revocation Authority"
-curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://$MyIP:9500/revocation/storeSystemParameters/" > storeSystemParametersResponceAtRevocationAutority.xml
+curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://$RevocationIP/revocation/storeSystemParameters/" > storeSystemParametersResponceAtRevocationAutority.xml
 
 # Store System parameters at User.
 # This method is not specified in H2.2.
 echo "Store System parameters at User"
-curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://$MyIP:9200/user/storeSystemParameters/" > storeSystemParametersResponceAtUser.xml
+curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://$UserIP/user/storeSystemParameters/" > storeSystemParametersResponceAtUser.xml
 
 # Store System parameters at verifier.
 # This method is not specified in H2.2.
 echo "Store System parameters at Verifier"
-curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://$MyIP:9300/verification/storeSystemParameters/" > storeSystemParametersResponceAtVerifier.xml
+curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://$VerifierIP/verification/storeSystemParameters/" > storeSystemParametersResponceAtVerifier.xml
 
 # Setup Revocation Authority Parameters.
 echo "Setup Revocation Authority Parameters"
-curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/revocationReferences.xml "http://$MyIP:9500/revocation/setupRevocationAuthorityParameters?keyLength=1024&uid=http%3A%2F%2FSmartCityRevocation" > revocationAuthorityParameters.xml
+curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/revocationReferences.xml "http://$RevocationIP/revocation/setupRevocationAuthorityParameters?keyLength=1024&uid=http%3A%2F%2FSmartCityRevocation" > revocationAuthorityParameters.xml
 
 # Store Revocation Authority Parameters at issuer.
 # This method is not specified in H2.2.
 echo "Store Revocation Authority Parameters at issuer"
-curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$MyIP:9100/issuer/storeRevocationAuthorityParameters/http%3A%2F%2FSmartCityRevocation"  > storeRevocationAuthorityParameters.xml
+curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$IssuerIP/issuer/storeRevocationAuthorityParameters/http%3A%2F%2FSmartCityRevocation"  > storeRevocationAuthorityParameters.xml
 
 # Store Revocation Authority Parameters at user.
 # This method is not specified in H2.2.
 echo "Store Revocation Authority Parameters at user"
-curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$MyIP:9200/user/storeRevocationAuthorityParameters/http%3A%2F%2FSmartCityRevocation"  > storeRevocationAuthorityParametersAtUserResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$UserIP/user/storeRevocationAuthorityParameters/http%3A%2F%2FSmartCityRevocation"  > storeRevocationAuthorityParametersAtUserResponce.xml
 
 # Store Revocation Authority Parameters at verifier.
 # This method is not specified in H2.2.
 echo "Store Revocation Authority Parameters at verifier"
-curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$MyIP:9300/verification/storeRevocationAuthorityParameters/http%3A%2F%2FSmartCityRevocation"  > storeRevocationAuthorityParametersAtVerifierResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @revocationAuthorityParameters.xml "http://$VerifierIP/verification/storeRevocationAuthorityParameters/http%3A%2F%2FSmartCityRevocation"  > storeRevocationAuthorityParametersAtVerifierResponce.xml
 
 ##
 
 # Store System parameters at Inspector.
 # This method is not specified in H2.2.
 echo "Store System parameters at inspector"
-curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://$MyIP:9400/inspector/storeSystemParameters/" > storeSystemParametersResponceAtInspector.xml
+curl -X POST --header "Content-Type: text/xml" -d @systemparameters.xml "http://$InspectorIP/inspector/storeSystemParameters/" > storeSystemParametersResponceAtInspector.xml
 
 # Store credential specification at Inspector.
 # This method is not specified in H2.2.
 echo "Store credential specification at inspector"
-curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$MyIP:9400/inspector/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtInspectorResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @tutorial-resources/credentialSpecificationGeo.xml "http://$InspectorIP/inspector/storeCredentialSpecification/http%3A%2F%2FMySmartCity-Owner-Device" > storeCredentialSpecificationAtInspectorResponce.xml
 
 
 # Generate Inspector Public Key
 # This method is not specified in H2.2.
 echo "Generating Inspector Public Key"
-curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9400/inspector/setupInspectorPublicKey?keyLength=1024&cryptoMechanism=idemix&uid=http%3A%2F%2FSmartCityInspection" > inspectorPublicKey.xml
+curl -X POST --header "Content-Type: text/xml" "http://$InspectorIP/inspector/setupInspectorPublicKey?keyLength=1024&cryptoMechanism=idemix&uid=http%3A%2F%2FSmartCityInspection" > inspectorPublicKey.xml
 
 # Store Inspector Public Key at user.
 # This method is not specified in H2.2.
 echo "Store Inspector Public Key at user"
-curl -X PUT --header "Content-Type: text/xml" -d @inspectorPublicKey.xml "http://$MyIP:9200/user/storeInspectorPublicKey/http%3A%2F%2FSmartCityInspection"  > storeInspectorPublicKeyAtUserResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @inspectorPublicKey.xml "http://$UserIP/user/storeInspectorPublicKey/http%3A%2F%2FSmartCityInspection"  > storeInspectorPublicKeyAtUserResponce.xml
 
 # Store Inspector Public Key at verifier.
 # This method is not specified in H2.2.
 echo "Store Inspector Public Key at verifier"
-curl -X PUT --header "Content-Type: text/xml" -d @inspectorPublicKey.xml "http://$MyIP:9300/verification/storeInspectorPublicKey/http%3A%2F%2FSmartCityInspection"  > storeInspectorPublicKeyAtVerifierResponce.xml
+curl -X PUT --header "Content-Type: text/xml" -d @inspectorPublicKey.xml "http://$VerifierIP/verification/storeInspectorPublicKey/http%3A%2F%2FSmartCityInspection"  > storeInspectorPublicKeyAtVerifierResponce.xml
 
 
 ##
 
 # Setup issuer parameters.
 echo "Setup issuer parameters"
-curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/issuerParametersInput.xml "http://$MyIP:9100/issuer/setupIssuerParameters/" > issuerParameters.xml
+curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/issuerParametersInput.xml "http://$IssuerIP/issuer/setupIssuerParameters/" > issuerParameters.xml
 
 
 # Store Issuer Parameters at user.
 # This method is not specified in H2.2.
 echo "Store Issuer Parameters at user"
-curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9200/user/storeIssuerParameters/http%3A%2F%2FSmartCity%2Fissuance%3Aidemix"  > storeIssuerParametersAtUser.xml
+curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$UserIP/user/storeIssuerParameters/http%3A%2F%2FSmartCity%2Fissuance%3Aidemix"  > storeIssuerParametersAtUser.xml
 
 # Store Issuer Parameters at verifier.
 # This method is not specified in H2.2.
 echo "Store Issuer Parameters at verifier"
-curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$MyIP:9300/verification/storeIssuerParameters/http%3A%2F%2FSmartCity%2Fissuance%3Aidemix"  > storeIssuerParametersAtVerifier.xml
+curl -X PUT --header "Content-Type: text/xml" -d @issuerParameters.xml "http://$VerifierIP/verification/storeIssuerParameters/http%3A%2F%2FSmartCity%2Fissuance%3Aidemix"  > storeIssuerParametersAtVerifier.xml
 
 # Create smartcard at user.
 # This method is not specified in H2.2.
 echo "Create smartcard at user"
-curl -X POST --header "Content-Type: text/xml" "http://$MyIP:9200/user/createSmartcard/http%3A%2F%2FSmartCity%2Fissuance%3Aidemix"
+curl -X POST --header "Content-Type: text/xml" "http://$UserIP/user/createSmartcard/http%3A%2F%2FSmartCity%2Fissuance%3Aidemix"
 
 # Init issuance protocol (first step for the issuer).
 echo "Init issuance protocol"
-curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/issuancePolicyAndAttributes.xml "http://$MyIP:9100/issuer/initIssuanceProtocol/" > issuanceMessageAndBoolean.xml
+curl -X POST --header "Content-Type: text/xml" -d @tutorial-resources/issuancePolicyAndAttributes.xml "http://$IssuerIP/issuer/initIssuanceProtocol/" > issuanceMessageAndBoolean.xml
 
 # Extract issuance message.
-curl -X POST --header "Content-Type: text/xml" -d @issuanceMessageAndBoolean.xml "http://$MyIP:9200/user/extractIssuanceMessage/" > firstIssuanceMessage.xml
+curl -X POST --header "Content-Type: text/xml" -d @issuanceMessageAndBoolean.xml "http://$UserIP/user/extractIssuanceMessage/" > firstIssuanceMessage.xml
 
 # First issuance protocol step (first step for the user).
 echo "First issuance protocol step for the user"
-curl -X POST --header "Content-Type: text/xml" -d @firstIssuanceMessage.xml "http://$MyIP:9200/user/issuanceProtocolStep/" > issuanceReturn.xml
+curl -X POST --header "Content-Type: text/xml" -d @firstIssuanceMessage.xml "http://$UserIP/user/issuanceProtocolStep/" > issuanceReturn.xml
 
 echo "Select first usable identity"
-curl -X POST --header "Content-Type: text/xml" -d @issuanceReturn.xml "http://$MyIP:9600/identity/issuance/" > uiIssuanceReturn.xml
+curl -X POST --header "Content-Type: text/xml" -d @issuanceReturn.xml "http://$IdentityIP/identity/issuance/" > uiIssuanceReturn.xml
 
 # First issuance protocol step - UI (first step for the user).
 echo "Second issuance protocol step (first step for the user)"
-curl -X POST --header "Content-Type: text/xml" -d @uiIssuanceReturn.xml "http://$MyIP:9200/user/issuanceProtocolStepUi/" > secondIssuanceMessage.xml
+curl -X POST --header "Content-Type: text/xml" -d @uiIssuanceReturn.xml "http://$UserIP/user/issuanceProtocolStepUi/" > secondIssuanceMessage.xml
 
 # Second issuance protocol step (second step for the issuer).
 echo "Second issuance protocol step (second step for the issuer)"
-curl -X POST --header "Content-Type: text/xml" -d @secondIssuanceMessage.xml "http://$MyIP:9100/issuer/issuanceProtocolStep/" > thirdIssuanceMessageAndBoolean.xml
+curl -X POST --header "Content-Type: text/xml" -d @secondIssuanceMessage.xml "http://$IssuerIP/issuer/issuanceProtocolStep/" > thirdIssuanceMessageAndBoolean.xml
 
 # Extract issuance message.
-curl -X POST --header "Content-Type: text/xml" -d @thirdIssuanceMessageAndBoolean.xml "http://$MyIP:9200/user/extractIssuanceMessage/" > thirdIssuanceMessage.xml
+curl -X POST --header "Content-Type: text/xml" -d @thirdIssuanceMessageAndBoolean.xml "http://$UserIP/user/extractIssuanceMessage/" > thirdIssuanceMessage.xml
 
 # Third issuance protocol step (second step for the user).
 echo "Third issuance protocol step (second step for the user)"
-curl -X POST --header "Content-Type: text/xml" -d @thirdIssuanceMessage.xml "http://$MyIP:9200/user/issuanceProtocolStep/" > fourthIssuanceMessageAndBoolean.xml
+curl -X POST --header "Content-Type: text/xml" -d @thirdIssuanceMessage.xml "http://$UserIP/user/issuanceProtocolStep/" > fourthIssuanceMessageAndBoolean.xml
 
 # Create presentation policy alternatives.
 # This method is not specified in H2.2.
 echo "Create presentation policy alternatives"
-curl -X GET --header "Content-Type: text/xml" -d @tutorial-resources/presentationPolicyAlternatives.xml "http://$MyIP:9300/verification/createPresentationPolicy?applicationData=testData" > presentationPolicyAlternatives.xml
+curl -X GET --header "Content-Type: text/xml" -d @tutorial-resources/presentationPolicyAlternatives.xml "http://$VerifierIP/verification/createPresentationPolicy?applicationData=testData" > presentationPolicyAlternatives.xml
 
 # Create presentation UI return.
 # This method is not specified in H2.2.
 echo "Create presentation UI return"
-curl -X POST --header "Content-Type: text/xml" -d @presentationPolicyAlternatives.xml "http://$MyIP:9200/user/createPresentationToken/" > uiPresentationArguments.xml
+curl -X POST --header "Content-Type: text/xml" -d @presentationPolicyAlternatives.xml "http://$UserIP/user/createPresentationToken/" > uiPresentationArguments.xml
 
 echo "Select first posisble identity"
-curl -X POST --header "Content-Type: text/xml" -d @uiPresentationArguments.xml "http://$MyIP:9600/identity/presentation" > uiPresentationReturn.xml
+curl -X POST --header "Content-Type: text/xml" -d @uiPresentationArguments.xml "http://$IdentityIP/identity/presentation" > uiPresentationReturn.xml
 
 # Create presentation token.
 # This method is not specified in H2.2.
 echo "Create presentation token"
-curl -X POST --header "Content-Type: text/xml" -d @uiPresentationReturn.xml "http://$MyIP:9200/user/createPresentationTokenUi/" > presentationToken.xml
+curl -X POST --header "Content-Type: text/xml" -d @uiPresentationReturn.xml "http://$UserIP/user/createPresentationTokenUi/" > presentationToken.xml
 
 
 # Setup presentationPolicyAlternativesAndPresentationToken.xml.
@@ -173,12 +178,12 @@ echo -n '</abc:PresentationPolicyAlternativesAndPresentationToken>' >> presentat
 # Verify presentation token against presentation policy.
 echo "Verify presentation token against presentation policy"
 # This method is not specified in H2.2.
-curl -X POST --header "Content-Type: text/xml" -d @presentationPolicyAlternativesAndPresentationToken.xml "http://$MyIP:9300/verification/verifyTokenAgainstPolicy/" > presentationTokenDescription.xml
+curl -X POST --header "Content-Type: text/xml" -d @presentationPolicyAlternativesAndPresentationToken.xml "http://$VerifierIP/verification/verifyTokenAgainstPolicy/" > presentationTokenDescription.xml
 
 #
 # Inspect presentation token.
 echo "Inspect presentation token"
-curl -X POST --header "Content-Type: text/xml" -d @presentationToken.xml "http://$MyIP:9400/inspector/inspect/" > inspectResult.xml
+curl -X POST --header "Content-Type: text/xml" -d @presentationToken.xml "http://$InspectorIP/inspector/inspect/" > inspectResult.xml
 
 exit 0
 
@@ -203,14 +208,14 @@ echo "${revocationhandle}" >> revocationAttributeList.xml
 echo '</abc:AttributeValue></abc:Attributes></abc:AttributeList>' >> revocationAttributeList.xml 
 
 echo "Calling revocation authority"
-curl -X POST --header "Content-Type: text/xml" -d @revocationAttributeList.xml "http://$MyIP:9500/revocation/revoke/http%3A%2F%2FSmartCityRevocation" > revokeReply.xml
+curl -X POST --header "Content-Type: text/xml" -d @revocationAttributeList.xml "http://$RevocationIP/revocation/revoke/http%3A%2F%2FSmartCityRevocation" > revokeReply.xml
 
 
 #
 # Check if the previous policy can be satisfied after revocation. Should return false.
 
 echo "Checking if policy can be satisfied."
-curl -X POST --header "Content-Type: text/xml" -d @presentationPolicyAlternatives.xml "http://$MyIP:9200/user/canBeSatisfied/" > canBeSatisfied.xml
+curl -X POST --header "Content-Type: text/xml" -d @presentationPolicyAlternatives.xml "http://$UserIP/user/canBeSatisfied/" > canBeSatisfied.xml
 
 
 #############
